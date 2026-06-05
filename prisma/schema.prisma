@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  password      String
+  role          String    @default("CITIZEN")
+  complaints    Complaint[]
+  notifications Notification[]
+  activityLogs  ActivityLog[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Complaint {
+  id            String    @id @default(uuid())
+  title         String
+  description   String    
+  imageUrl      String?
+  latitude      Float
+  longitude     Float
+  status        String    @default("PENDING")
+  priority      String    @default("LOW")
+  category      String?   
+  sentiment     String?   
+  aiSummary           String?
+  aiKeyIssues         String?
+  aiRecommendedAction String?
+  aiUrgencyReason     String?
+  rejectionReason     String?
+  subdistrict         String?   
+  suggestDelete       Boolean   @default(false)
+  incidentDate        DateTime?
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  parentId      String?
+  parent        Complaint?  @relation("ComplaintCluster", fields: [parentId], references: [id])
+  duplicates    Complaint[] @relation("ComplaintCluster")
+  duplicateCount Int        @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model ActivityLog {
+  id            String    @id @default(uuid())
+  action        String
+  details       String?   
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  createdAt     DateTime  @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  link      String?  
+  createdAt DateTime @default(now())
+}

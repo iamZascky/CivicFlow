@@ -1,0 +1,282 @@
+@import "tailwindcss";
+@import "maplibre-gl/dist/maplibre-gl.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+}
+
+.dark {
+  --background: #020617;
+  --foreground: #f8fafc;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  
+  /* Custom brand colors */
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-accent: #10b981;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Modern Elegant Scrollbar (Vertical Line & Arrow Pill Thumb) */
+::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+}
+::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+::-webkit-scrollbar-track:vertical {
+  background: linear-gradient(to right, transparent 4px, #cbd5e1 4px, #cbd5e1 6px, transparent 6px) !important;
+}
+::-webkit-scrollbar-track:horizontal {
+  background: linear-gradient(to bottom, transparent 4px, #cbd5e1 4px, #cbd5e1 6px, transparent 6px) !important;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #475569 !important;
+  border-radius: 9999px !important;
+  border: 2px solid transparent !important;
+  background-clip: padding-box !important;
+}
+::-webkit-scrollbar-thumb:vertical {
+  background-image: 
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cG9seWdvbiBwb2ludHM9IjUsMiAyLDcgOCw3IiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjkiLz48L3N2Zz4="),
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cG9seWdvbiBwb2ludHM9IjUsOCAyLDMgOCwzIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjkiLz48L3N2Zz4=") !important;
+  background-position: 50% top 2px, 50% bottom 2px !important;
+  background-repeat: no-repeat !important;
+  background-size: 5px 5px !important;
+}
+::-webkit-scrollbar-thumb:horizontal {
+  background-image: 
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cG9seWdvbiBwb2ludHM9IjIsNSA3LDIgNyw4IiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjkiLz48L3N2Zz4="),
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cG9seWdvbiBwb2ludHM9IjgsNSAzLDIgMyw4IiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjkiLz48L3N2Zz4=") !important;
+  background-position: left 2px 50%, right 2px 50% !important;
+  background-repeat: no-repeat !important;
+  background-size: 5px 5px !important;
+}
+
+/* Global scrollbar Dark Mode overrides */
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar-track:vertical {
+    background: linear-gradient(to right, transparent 4px, #334155 4px, #334155 6px, transparent 6px) !important;
+  }
+  ::-webkit-scrollbar-track:horizontal {
+    background: linear-gradient(to bottom, transparent 4px, #334155 4px, #334155 6px, transparent 6px) !important;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #64748b !important;
+  }
+}
+.dark ::-webkit-scrollbar-track:vertical {
+  background: linear-gradient(to right, transparent 4px, #334155 4px, #334155 6px, transparent 6px) !important;
+}
+.dark ::-webkit-scrollbar-track:horizontal {
+  background: linear-gradient(to bottom, transparent 4px, #334155 4px, #334155 6px, transparent 6px) !important;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #64748b !important;
+}
+
+/* Custom Scrollbar for specific smaller elements */
+@supports not selector(::-webkit-scrollbar) {
+  .custom-scrollbar {
+    scrollbar-width: thin !important;
+    scrollbar-color: #475569 transparent !important;
+  }
+  .dark .custom-scrollbar {
+    scrollbar-color: #64748b transparent !important;
+  }
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+}
+.custom-scrollbar::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+.custom-scrollbar::-webkit-scrollbar-track:vertical {
+  background: linear-gradient(to right, transparent 4px, #cbd5e1 4px, #cbd5e1 6px, transparent 6px) !important;
+}
+.custom-scrollbar::-webkit-scrollbar-track:horizontal {
+  background: linear-gradient(to bottom, transparent 4px, #cbd5e1 4px, #cbd5e1 6px, transparent 6px) !important;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #475569 !important;
+  border-radius: 9999px !important;
+  border: 2px solid transparent !important;
+  background-clip: padding-box !important;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:vertical {
+  background-image: 
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cG9seWdvbiBwb2ludHM9IjUsMiAyLDcgOCw3IiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjkiLz48L3N2Zz4="),
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cG9seWdvbiBwb2ludHM9IjUsOCAyLDMgOCwzIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjkiLz48L3N2Zz4=") !important;
+  background-position: 50% top 2px, 50% bottom 2px !important;
+  background-repeat: no-repeat !important;
+  background-size: 5px 5px !important;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:horizontal {
+  background-image: 
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cG9seWdvbiBwb2ludHM9IjIsNSA3LDIgNyw4IiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjkiLz48L3N2Zz4="),
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cG9seWdvbiBwb2ludHM9IjgsNSAzLDIgMyw4IiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjkiLz48L3N2Zz4=") !important;
+  background-position: left 2px 50%, right 2px 50% !important;
+  background-repeat: no-repeat !important;
+  background-size: 5px 5px !important;
+}
+
+/* Custom scrollbar Dark Mode overrides */
+@media (prefers-color-scheme: dark) {
+  .custom-scrollbar::-webkit-scrollbar-track:vertical {
+    background: linear-gradient(to right, transparent 4px, #334155 4px, #334155 6px, transparent 6px) !important;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track:horizontal {
+    background: linear-gradient(to bottom, transparent 4px, #334155 4px, #334155 6px, transparent 6px) !important;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #64748b !important;
+  }
+}
+.dark .custom-scrollbar::-webkit-scrollbar-track:vertical {
+  background: linear-gradient(to right, transparent 4px, #334155 4px, #334155 6px, transparent 6px) !important;
+}
+.dark .custom-scrollbar::-webkit-scrollbar-track:horizontal {
+  background: linear-gradient(to bottom, transparent 4px, #334155 4px, #334155 6px, transparent 6px) !important;
+}
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #64748b !important;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 1);
+
+  -webkit-backdrop-filter: blur(12px);
+  border-left: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+@media (prefers-color-scheme: dark) {
+  .glass-panel {
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+}
+
+.premium-card {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .premium-card {
+    background: rgba(15, 23, 42, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  .premium-card:hover {
+    background: rgba(15, 23, 42, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* Bouncy Button Utilities */
+.btn-bouncy {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-bouncy:hover {
+  transform: scale(1.02);
+}
+.btn-bouncy:active {
+  transform: scale(0.96);
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom map popup styles for dark mode */
+.dark .maplibregl-popup-content {
+  background: rgba(15, 23, 42, 0.9) !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 45px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  padding: 12px 14px !important;
+}
+
+.dark .maplibregl-popup-tip {
+  border-top-color: rgba(15, 23, 42, 0.9) !important;
+  border-bottom-color: rgba(15, 23, 42, 0.9) !important;
+  border-left-color: rgba(15, 23, 42, 0.9) !important;
+  border-right-color: rgba(15, 23, 42, 0.9) !important;
+}
+
+/* Custom Zoom/Navigation controls style for dark mode map */
+.dark .maplibregl-ctrl-group {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .maplibregl-ctrl-group button {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .maplibregl-ctrl-group button:last-child {
+  border-bottom: none !important;
+}
+
+.dark .maplibregl-ctrl-group button span {
+  filter: invert(1) !important; /* Invert control icon colors in dark mode */
+}
+
+
+
